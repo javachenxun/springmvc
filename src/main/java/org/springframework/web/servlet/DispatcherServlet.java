@@ -925,10 +925,13 @@ public class DispatcherServlet extends FrameworkServlet {
 			Exception dispatchException = null;
 
 			try {
+				//检查是否是上传请求
 				processedRequest = checkMultipart(request);
+				//是上传请求的话标记，最后清除临时文件
 				multipartRequestParsed = (processedRequest != request);
 
 				// Determine handler for the current request.
+				//根据request 获取HandlerExecutionChain,获取执行链，里面包括HandlerInterceptor和Handler
 				mappedHandler = getHandler(processedRequest);
 				if (mappedHandler == null || mappedHandler.getHandler() == null) {
 					noHandlerFound(processedRequest, response);
@@ -936,6 +939,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				}
 
 				// Determine handler adapter for the current request.
+				//根据HandlerExecutionChain中的Handler去获取执行Handler的HandlerAdapter
 				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 
 				// Process last-modified header, if supported by the handler.
@@ -950,24 +954,27 @@ public class DispatcherServlet extends FrameworkServlet {
 						return;
 					}
 				}
-
+                //在执行handler之前，先执行拦截器的前置方法
 				if (!mappedHandler.applyPreHandle(processedRequest, response)) {
 					return;
 				}
 
 				// Actually invoke the handler.
+			    //在使用HandlerAdapter去执行handler(即执行controller，好像是更具反射执行)
 				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
-
+                //判断是否是异步 ，异步直接返回
 				if (asyncManager.isConcurrentHandlingStarted()) {
 					return;
 				}
-
+                //获取view的name
 				applyDefaultViewName(processedRequest, mv);
+				//拦截器的后置方法
 				mappedHandler.applyPostHandle(processedRequest, response, mv);
 			}
 			catch (Exception ex) {
 				dispatchException = ex;
 			}
+			//根据viewResover找打View，使用 Model渲染View
 			processDispatchResult(processedRequest, response, mappedHandler, mv, dispatchException);
 		}
 		catch (Exception ex) {
@@ -979,6 +986,7 @@ public class DispatcherServlet extends FrameworkServlet {
 		finally {
 			if (asyncManager.isConcurrentHandlingStarted()) {
 				// Instead of postHandle and afterCompletion
+				//拦截器在整个请求完成后执行
 				if (mappedHandler != null) {
 					mappedHandler.applyAfterConcurrentHandlingStarted(processedRequest, response);
 				}
