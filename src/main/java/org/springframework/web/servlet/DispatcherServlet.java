@@ -909,6 +909,7 @@ public class DispatcherServlet extends FrameworkServlet {
 	 * to find the first that supports the handler class.
 	 * <p>All HTTP methods are handled by this method. It's up to HandlerAdapters or handlers
 	 * themselves to decide which methods are acceptable.
+	 * 
 	 * @param request current HTTP request
 	 * @param response current HTTP response
 	 * @throws Exception in case of any kind of processing failure
@@ -930,7 +931,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				//是上传请求的话标记，最后清除临时文件
 				multipartRequestParsed = (processedRequest != request);
 
-				// Determine handler for the current request.
+				// Determine handler for the current request.确定当前请求的处理程序
 				//根据request 获取HandlerExecutionChain,获取执行链，里面包括HandlerInterceptor和Handler
 				mappedHandler = getHandler(processedRequest);
 				if (mappedHandler == null || mappedHandler.getHandler() == null) {
@@ -938,8 +939,8 @@ public class DispatcherServlet extends FrameworkServlet {
 					return;
 				}
 
-				// Determine handler adapter for the current request.
-				//根据HandlerExecutionChain中的Handler去获取执行Handler的HandlerAdapter
+				// Determine handler adapter for the current request.确定当前请求的处理程序适配器
+				//根据Handler去获取执行Handler的HandlerAdapter
 				HandlerAdapter ha = getHandlerAdapter(mappedHandler.getHandler());
 
 				// Process last-modified header, if supported by the handler.
@@ -962,7 +963,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				// Actually invoke the handler.
 			    //在使用HandlerAdapter去执行handler(即执行controller，好像是更具反射执行)
 				mv = ha.handle(processedRequest, response, mappedHandler.getHandler());
-                //判断是否是异步 ，异步直接返回
+                //判断是否是异步 ，异步直接终止
 				if (asyncManager.isConcurrentHandlingStarted()) {
 					return;
 				}
@@ -992,7 +993,7 @@ public class DispatcherServlet extends FrameworkServlet {
 				}
 			}
 			else {
-				// Clean up any resources used by a multipart request.
+				// 清除请求中的附件 Clean up any resources used by a multipart request.
 				if (multipartRequestParsed) {
 					cleanupMultipart(processedRequest);
 				}
