@@ -1,4 +1,4 @@
-package com.chenxun.controller;
+package com.chenxun.controller.servlet;
 
 import java.io.IOException;
 
@@ -16,12 +16,12 @@ import org.apache.commons.logging.LogFactory;
 /**
  * Servlet implementation class IServlet
  */
-public class IServlet extends HttpServlet {
+public class TServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	private final Log  log = LogFactory.getLog(this.getClass());
    
-    public IServlet() {
+    public TServlet() {
         super();
         log.info("====IServlet()===");
     }

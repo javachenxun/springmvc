@@ -4,18 +4,19 @@
   <servlet>
     <servlet-name>appServlet</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
-<!--      <init-param>
+     <init-param>
         <param-name>chenxun</param-name>
         <param-value>chenxun</param-value>
-     </init-param> -->
+     </init-param>
     <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>appServlet</servlet-name>
-    <url-pattern>/</url-pattern>
+    <url-pattern>/*</url-pattern>
   </servlet-mapping>
   
-  <!-- <servlet>
+  <!-- 
+  <servlet>
     <description></description>
     <display-name>IServlet</display-name>
     <servlet-name>IServlet</servlet-name>
@@ -24,5 +25,6 @@
   <servlet-mapping>
     <servlet-name>IServlet</servlet-name>
     <url-pattern>/IServlet</url-pattern>
-  </servlet-mapping> -->
+  </servlet-mapping> 
+  -->
 </web-app>
