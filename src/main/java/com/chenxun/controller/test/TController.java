@@ -35,7 +35,7 @@ public class TController implements EnvironmentAware {
 		return "go.jsp";
 	}
 	
-	@RequestMapping(value = {"/topage"}, method = { RequestMethod.GET })
+	@RequestMapping(value = {"/toPage"}, method = { RequestMethod.GET })
 	public  String page(Model model) {
 		model.addAttribute("msg", "测试");
 		return "tcontroller";
