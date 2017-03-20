@@ -1,8 +1,8 @@
-##Springmvc源码分析
+## Springmvc源码分析
 
-####1.主要流程类
+#### 1.主要流程类
 
-#####1.1了解三个重要的Servelt：
+##### 1.1了解三个重要的Servelt：
 
 	HttpServlet
 	   ^
@@ -15,7 +15,7 @@
 	   |
 	DispatcherServlet ：doService（）调用doDispatch（）进行处理,在doDispatch中才正式开始处理   
 
-#####1.2doDispathch主要逻辑
+##### 1.2doDispathch主要逻辑
 
 	//检查是否是上传请求
 	processedRequest = checkMultipart(request);
@@ -53,9 +53,9 @@
 		cleanupMultipart(processedRequest);
 	}
 
-####2.主要类说明
+#### 2.主要类说明
 
-#####2.1拦截器：HandlerInterceptor
+##### 2.1拦截器：HandlerInterceptor
 
      preHandler() - 在实际的handler被执行前被调用
      postHandler() - 在handler被执行后被调用
